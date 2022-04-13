@@ -50,6 +50,10 @@ h1 {
     border: 1px solid #ccc;
 }
 
+.form-box {
+    width: 100%;
+}
+
 .checkbox {
     margin-right: 5px;
 }
@@ -95,13 +99,18 @@ h1 {
     cursor: pointer;
 }
 
+.filter-btn {
+    padding: 5px;
+}
+
+.active {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 @media all and (max-width: 520px) {
     .filter-area {
         flex-direction: column;
-    }
-
-    .filter-btn {
-        padding: 5px 0;
     }
 }
 

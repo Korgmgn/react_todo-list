@@ -1,15 +1,13 @@
 import React from "react"
 
-function toDoList(props) {
+function toDoList({toDoListState}) {
 
-    console.log(props)
-
-    const todoComponent = props.toDoList.map(task => {
+    const todoComponent = toDoListState.map(item => {
         return (
-            <li className="list-item pending">
+            <li className="list-item pending" key={item.id}>
                 <label>
                     <input className="checkbox" type="checkbox"></input>
-                    {task}
+                    {item.task}
                 </label>
             </li>
         )
