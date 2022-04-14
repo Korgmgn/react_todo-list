@@ -1,8 +1,17 @@
 import React from "react"
 
-function toDoList({toDoListState}) {
+function toDoList({toDoListState, searchTaskInput}) {
 
-    const todoComponent = toDoListState.map(item => {
+    const searchResult = toDoListState.filter(item => {
+        if(searchTaskInput === "") {
+            return item
+        } else {
+            return item.task.toLowerCase().includes(searchTaskInput.toLowerCase())
+        }
+    })
+
+
+    const todoComponent = searchResult.map(item => {
         return (
             <li className="list-item pending" key={item.id}>
                 <label>
@@ -13,10 +22,9 @@ function toDoList({toDoListState}) {
         )
     })
     
-
     return (
         <ul>
-            {todoComponent}
+            {todoComponent.length > 0 ? todoComponent : <p className="list-item pending">No results</p>}
         </ul>
     )
 }

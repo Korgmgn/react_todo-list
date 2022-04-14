@@ -10,7 +10,9 @@ function App() {
     const [toDoList, setToDoList] = useState([{id: 1, task: "First task"}, {id: 2, task: "Second task"}])
     const [headerInputDisplay, setHeaderInputDisplay] = useState({isSearchBar: false, isAddNew: false})
     const [selectFilter, setSelectFilter] = useState({all: true, pending: false, completed: false})
-    const [addTaskInput, setAddTaskInput] = useState("")
+    const [newTaskInput, setNewTaskInput] = useState("")
+    const [searchTaskInput, setSearchTaskInput] = useState("")
+
 
     function toggleFilter(filter) {
         if(filter === "all") {
@@ -64,23 +66,37 @@ function App() {
         })
     }
 
-    function submitInputAddTask(event) {
-        setAddTaskInput(event.target.value)
+    function searchTaskChange(event) {
+        setSearchTaskInput(event.target.value)
+    }
+
+    function newTaskChange(event) {
+        setNewTaskInput(event.target.value)
     }
 
     function submitNewTask(event) {
         event.preventDefault()
         setToDoList(prevState => {
-            return [...prevState, {id: prevState.length + 1, task: addTaskInput}]
+            return [...prevState, {id: prevState.length + 1, task: newTaskInput}]
         })
-        setAddTaskInput("")
+        setNewTaskInput("")
     }
 
     return (
         <div className="App">
             <div className="container">
-                <Header inputState={headerInputDisplay} handleAddTaskChange={submitInputAddTask} handleSubmit={submitNewTask} newTaskValue={addTaskInput} />
-                <ToDoList toDoListState={toDoList}/>
+                <Header 
+                    inputDisplayState={headerInputDisplay} 
+                    newTaskValue={newTaskInput}
+                    handleNewTaskChange={newTaskChange} 
+                    handleSubmitNewTask={submitNewTask} 
+                    searchTaskValue={searchTaskInput}
+                    handleSearchTaskChange={searchTaskChange}
+                />
+                <ToDoList 
+                    toDoListState={toDoList}
+                    searchTaskInput={searchTaskInput}
+                />
             </div>
             <Footer 
                 toDoList={toDoList}
@@ -89,6 +105,7 @@ function App() {
                 handleToggleAddNew={toggleAddNew}
                 handleFilter={toggleFilter}
             />
+            {/* add keyboard commands */}
             <p className="bottom-info">Press 'esc' to cancel</p>
         </div>
     );
