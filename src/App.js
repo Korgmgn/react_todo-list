@@ -5,13 +5,14 @@ import Footer from "./components/Footer"
 
 function App() {
 
-    //Pour la barre de rechercher, ajouter à l'input un onChange qui utilise .filter sur toDoList  ?
     //Pour les filtres, ajouter clé "checked: boolean" dans toDoList
-    const [toDoList, setToDoList] = useState([{id: 1, task: "First task"}, {id: 2, task: "Second task"}])
+    const [toDoList, setToDoList] = useState([{id: 1, task: "First task", checked: false}, {id: 2, task: "Second task", checked: false}])
     const [headerInputDisplay, setHeaderInputDisplay] = useState({isSearchBar: false, isAddNew: false})
     const [selectFilter, setSelectFilter] = useState({all: true, pending: false, completed: false})
     const [newTaskInput, setNewTaskInput] = useState("")
     const [searchTaskInput, setSearchTaskInput] = useState("")
+
+    console.log(toDoList)
 
 
     function toggleFilter(filter) {
@@ -33,7 +34,7 @@ function App() {
                     completed: false
                 }
             })
-        } else {
+        } else if(filter === "completed") {
             setSelectFilter(prevState => {
                 return {
                     ...prevState,
@@ -56,7 +57,7 @@ function App() {
         })
     }
     
-    function toggleAddNew() {
+    function toggleAddNewTask() {
         setHeaderInputDisplay(prevState => {
             return {
                 ...prevState,
@@ -77,9 +78,16 @@ function App() {
     function submitNewTask(event) {
         event.preventDefault()
         setToDoList(prevState => {
-            return [...prevState, {id: prevState.length + 1, task: newTaskInput}]
+            return [...prevState, {id: prevState.length + 1, task: newTaskInput, checked: false}]
         })
         setNewTaskInput("")
+    }
+
+    function checkTask(taskId) {
+        setToDoList(prevState => prevState.map(item => {
+                return item.id === taskId ? {...item, checked: !item.checked} : item
+            })
+        )
     }
 
     return (
@@ -96,13 +104,15 @@ function App() {
                 <ToDoList 
                     toDoListState={toDoList}
                     searchTaskInput={searchTaskInput}
+                    handleCheckbox={checkTask}
+                    filterValue={selectFilter}
                 />
             </div>
             <Footer 
                 toDoList={toDoList}
                 filterState={selectFilter}
                 handleToggleSearchBar={toggleSearchBar}
-                handleToggleAddNew={toggleAddNew}
+                handleToggleAddNewTask={toggleAddNewTask}
                 handleFilter={toggleFilter}
             />
             {/* add keyboard commands */}

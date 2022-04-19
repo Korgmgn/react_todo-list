@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Footer = ({toDoList, filterState, handleToggleSearchBar, handleToggleAddNew, handleFilter}) => {
+const Footer = ({toDoList, filterState, handleToggleSearchBar, handleToggleAddNewTask, handleFilter}) => {
 
     
     return (
         <footer className="footer">
             <div className="btn-area">
-                <div className="add-icon btn" onClick={handleToggleAddNew} >+</div>
+                <div className="add-icon btn" onClick={handleToggleAddNewTask} >+</div>
                 <div className="search-icon btn" onClick={handleToggleSearchBar}>Q</div>
             </div>
             <p className="counter">{toDoList.length} items left</p>

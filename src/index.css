@@ -64,6 +64,10 @@ h1 {
     border-top: solid 1px #ddd;
 }
 
+.completed {
+    text-decoration: line-through;
+}
+
 .footer {
     display: flex;
     flex-direction: row;
@@ -106,6 +110,7 @@ h1 {
 .active {
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: fit-content;
 }
 
 @media all and (max-width: 520px) {
