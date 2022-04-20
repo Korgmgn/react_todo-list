@@ -16,6 +16,8 @@ function toDoList({toDoListState, searchTaskInput, handleCheckbox, filterValue})
             return item
         } else if (filterValue.all || (item.checked && filterValue.completed)) {
             return item
+        } else {
+            return item
         }
     })
 
