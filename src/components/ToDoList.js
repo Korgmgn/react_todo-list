@@ -17,7 +17,7 @@ function toDoList({toDoListState, searchTaskInput, handleCheckbox, filterValue})
         } else if (filterValue.all || (item.checked && filterValue.completed)) {
             return item
         } else {
-            return item
+            return null
         }
     })
 
@@ -25,7 +25,12 @@ function toDoList({toDoListState, searchTaskInput, handleCheckbox, filterValue})
         return (
             <li className={item.checked ? "list-item completed" : "list-item"} key={item.id}>
                 <label>
-                    <input className="checkbox" type="checkbox" checked={item.checked} onChange={() => handleCheckbox(item.id)} ></input>
+                    <input 
+                        className="checkbox" 
+                        type="checkbox" 
+                        checked={item.checked} 
+                        onChange={() => handleCheckbox(item.id)} 
+                    />
                     {item.task}
                 </label>
             </li>
@@ -34,7 +39,10 @@ function toDoList({toDoListState, searchTaskInput, handleCheckbox, filterValue})
     
     return (
         <ul>
-            {todoComponent.length > 0 ? todoComponent : <p className="list-item pending">No results</p>}
+            {todoComponent.length > 0 ? 
+            todoComponent 
+            : 
+            <p className="list-item pending">No results</p>}
         </ul>
     )
 }
