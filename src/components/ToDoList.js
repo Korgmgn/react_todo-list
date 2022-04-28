@@ -24,7 +24,7 @@ function toDoList({toDoListState, searchTaskInput, handleCheckbox, filterValue})
     const todoComponent = filterSearchResult.map(item => {
         return (
             <li className={item.checked ? "list-item completed" : "list-item"} key={item.id}>
-                <label>
+                <label className="task-label">
                     <input 
                         className="checkbox" 
                         type="checkbox" 

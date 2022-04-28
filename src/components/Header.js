@@ -13,7 +13,8 @@ const Header = ({inputDisplayState: {isAddNew, isSearchBar}, newTaskValue, handl
                             name="newTask" 
                             type="text" 
                             value={newTaskValue} 
-                            onChange={handleNewTaskChange} 
+                            onChange={handleNewTaskChange}
+                            maxLength="100"
                         />
                     </form>
                 }
@@ -25,6 +26,7 @@ const Header = ({inputDisplayState: {isAddNew, isSearchBar}, newTaskValue, handl
                         name="searchTask" 
                         value={searchTaskValue} 
                         onChange={handleSearchTaskChange}
+                        maxLength="100"
                     />
                 }
             </header>

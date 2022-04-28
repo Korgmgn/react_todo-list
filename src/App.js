@@ -5,16 +5,46 @@ import Footer from "./components/Footer"
 
 function App() {
 
-    //Pour les filtres, ajouter clé "checked: boolean" dans toDoList
-    const [toDoList, setToDoList] = useState([{id: 1, task: "First task", checked: false}, {id: 2, task: "Second task", checked: false}])
+    const [toDoList, setToDoList] = useState(
+        [
+            {id: 1, task: "Learn React.js", checked: false}, 
+            {id: 2, task: "Create a simple React.js App", checked: false}, 
+            {id: 3, task: "Show your skills !", checked: false}
+        ]
+    )
     const [headerInputDisplay, setHeaderInputDisplay] = useState({isSearchBar: false, isAddNew: false})
     const [selectFilter, setSelectFilter] = useState({all: true, pending: false, completed: false})
-    const [newTaskInput, setNewTaskInput] = useState("")
-    const [searchTaskInput, setSearchTaskInput] = useState("")
+    const [newTaskInput, setNewTaskInput] = useState("") //State for current input in the "new task" bar
+    const [searchTaskInput, setSearchTaskInput] = useState("") //State for current input in the "search" bar
 
-    console.log(toDoList)
+    //Sets search bar value as state
+    function searchTaskChange(event) {
+        setSearchTaskInput(event.target.value)
+    }
 
+    //Sets add new task bar value as state
+    function newTaskChange(event) {
+        setNewTaskInput(event.target.value)
+    }
 
+    //Adds new task, setting its value to be equal to the input precedently saved as state 
+    function submitNewTask(event) {
+        event.preventDefault()
+        setToDoList(prevState => {
+            return [...prevState, {id: prevState.length + 1, task: newTaskInput, checked: false}]
+        })
+        setNewTaskInput("")
+    }
+
+    //Sets task state to be "checked"
+    function checkTask(taskId) {
+        setToDoList(prevState => prevState.map(item => {
+                return item.id === taskId ? {...item, checked: !item.checked} : item
+            })
+        )
+    }
+
+    //Changes current filter when clicking on one of three options in footer
     function toggleFilter(filter) {
         if(filter === "all") {
             setSelectFilter(prevState => {
@@ -46,48 +76,25 @@ function App() {
         }
     }
 
-    //Refactoriser et fusionner les deux fonctions suivantes
-    function toggleSearchBar() {
-        setHeaderInputDisplay(prevState => {
-            return {
-                ...prevState,
-                isSearchBar: !prevState.isSearchBar,
-                isAddNew: false
-            }
-        })
-    }
-    
-    function toggleAddNewTask() {
-        setHeaderInputDisplay(prevState => {
-            return {
-                ...prevState,
-                isSearchBar: false,
-                isAddNew: !prevState.isAddNew
-            }
-        })
-    }
-
-    function searchTaskChange(event) {
-        setSearchTaskInput(event.target.value)
-    }
-
-    function newTaskChange(event) {
-        setNewTaskInput(event.target.value)
-    }
-
-    function submitNewTask(event) {
-        event.preventDefault()
-        setToDoList(prevState => {
-            return [...prevState, {id: prevState.length + 1, task: newTaskInput, checked: false}]
-        })
-        setNewTaskInput("")
-    }
-
-    function checkTask(taskId) {
-        setToDoList(prevState => prevState.map(item => {
-                return item.id === taskId ? {...item, checked: !item.checked} : item
+    //Displays or hides the input search bar or the input new task when clicking the related footer icon
+    function toggleInputBar(inputType) {
+        if(inputType === "searchBar"){
+            setHeaderInputDisplay(prevState => {
+                return {
+                    ...prevState,
+                    isSearchBar: !prevState.isSearchBar,
+                    isAddNew: false
+                }
             })
-        )
+        } else if (inputType === "newTaskBar") {
+            setHeaderInputDisplay(prevState => {
+                return {
+                    ...prevState,
+                    isSearchBar: false,
+                    isAddNew: !prevState.isAddNew
+                }
+            })
+        }
     }
 
     return (
@@ -111,12 +118,9 @@ function App() {
             <Footer 
                 toDoList={toDoList}
                 filterState={selectFilter}
-                handleToggleSearchBar={toggleSearchBar}
-                handleToggleAddNewTask={toggleAddNewTask}
+                handleToggleInputBar={toggleInputBar}
                 handleFilter={toggleFilter}
             />
-            {/* add keyboard commands */}
-            <p className="bottom-info">Press 'esc' to cancel</p>
         </div>
     );
 }
